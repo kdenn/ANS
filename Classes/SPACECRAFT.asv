@@ -19,7 +19,6 @@ classdef SPACECRAFT
     TIMESTAMPS:
         - 09-Jun-2019: creation (KD)
         - 13-Jun-2019: style changes (KD)
-        - 14-Jun-2019: style update and added properties (KD)
     -----------------------------------------------------------------------
     %}
     

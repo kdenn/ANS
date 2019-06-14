@@ -20,63 +20,7 @@ G = 6.67259*10^-20; % Gravitational Constant
 Reqec = rotEQUtoECL();
 
 %% Asteroid 
-ast.filename = 'eros3mill'; % High Res Model %CHANGE
-ast.filenameLR = 'eros200700'; % Low Res Model %CHANGE
-ast.m = 6.687E15; % mass [kg]
-ast.mu = G*ast.m;
-ast.alb = 0.8;  % albedo
-% Orbital Elements (JPL HORIZONS)
-ast.JD_epoch = 2451170.5;   % JD epoch [days]
-% 1998 Dec 23 00:00:00 UTC
-ast.e = 0.2228858603247133;                        % eccentricity
-ast.i = deg2rad(10.83015266864554);                % inclination [rad]
-ast.a = 1.458260038106518*AU;                      % semi-major axis [km]
-ast.w = deg2rad(178.6132327246327);                % arg or per [rad]
-ast.Om = deg2rad(304.4308844737856);               % RAAN [rad]
-ast.M_0 = deg2rad(208.1235381788443);              % mean anomaly [rad]
-ast.n = deg2rad(0.5596952381222570)/(24*60*60);    % mean motion [rad/s]
-ast.T = 2*pi/ast.n;                                % period [s/rev]
-% Rotation Parameters (IAU Report) epoch: J2000
-ast.alp = 11.35;                                   % ascention [deg]
-ast.del = 17.22;                                   % declination [deg]
-ast.W_0 = 326.07;                                  % prime meridian [deg]
-ast.W_d = 1639.38864745;                           % rotation rate [deg]
-
-%% Spacecraft Options
-% Sat 1: ANS
-JD_0 = datenum(2019,9,4,0,0,0)+1721058.5;  % JD epoch [days]
-scANS = spacecraft(JD_0,0.01,deg2rad(80),35,0,deg2rad(220),1.5,ast.mu);
-% Sat 2: NEAR Shoemaker 
-scNEAR = spacecraft(2451170.5,0.65,deg2rad(-30),200,pi,0.8,0,ast.mu);
-    % JD 1998 Dec 23 00:00:00 UTC
-
-%% Simulation 
-% Set 1: one full satellite orbit
-JD_0 = datenum(2019,9,4,0,0,0)+1721058.5; % start time [JD]
-dur = scANS.T;                                       % duration of sim [s]
-pts = 20;                                          % number of ims to take
-JDspan = linspace(JD_0,JD_0+dur/(60*60*24),pts);   % time span [JD]
-
-% Set 2: Eros orbit about Sun, random point spread
-%{
-    JD_0 = datenum(2019,9,4,0,0,0)+1721058.5;        % start time [JD]
-    dur = ast.T./86400;                              % duration of sim [JD]
-    pts = 1000;                                      % number of ims to take
-    rPts = sort(rand(1,pts-2));                      % randomly choose points
-    JDspan = [JD_0, rPts.*dur + JD_0, JD_0 + dur];   % time span [JD]
-%}
-
-%% Camera Options
-% Set 1: NEAR Shoemaker
-% https://nssdc.gsfc.nasa.gov/nmc/experimentDisplay.do?id=1996-008A-01
-camNEAR = camera(168,[244 537],[27 16]);
-% Set 2: Point Grey Camera
-camPtGry = camera(17,[1200 1920],[5.86 5.86]);
-% Set 3: OSIRIS-REx
-camOSIRIS = camera(7.6,[1944 2592],[2.2 2.2]);
-% Set 4: Nikon D810 (extremely high-res)
-% https://www.ephotozine.com/article/nikon-d810-digital-slr-expert-review-25758
-camNikon = camera(100,[4912 7360],[4.9 4.9]);
+ansGT = ANSGT('nSpacecraft',1);
 
 %% UKF Params 
 dr = 50; % Bounding radius for potential matches
