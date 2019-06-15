@@ -23,7 +23,7 @@ classdef CAMERA
     properties
         name = 'Orbiter'
     end
-    properties (SetAccess = protected)
+    properties (SetAccess = private)
         f                   % double, focal length (mm)
         pxNum               % 1x2 double, sensor size [wxh] (px)
         pxSze               % 1x2 double, size of a pixel [wxh] (micron)

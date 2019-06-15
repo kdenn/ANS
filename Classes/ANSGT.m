@@ -28,8 +28,8 @@ classdef ANSGT
     -----------------------------------------------------------------------
     %}
     
-    properties (SetAccess = protected)
-        % These are protected and can only be edited by functions inside
+    properties (SetAccess = private)
+        % These are private and can only be edited by functions inside
         % this class. However, their GetAccess is still public so they can
         % be read by anyone, including the command line
         %% File System
@@ -102,26 +102,7 @@ classdef ANSGT
             AU = 149597870.7; % AU conversion [km/AU]
             G = 6.67259*10^-20; % Gravitational Constant
             % Asteroid
-                defaultAst.name = 'Eros';
-                defaultAst.filename = 'eros3mill'; % High Res Model
-                defaultAst.filenameLR = 'eros200700'; % Low Res Model 
-                defaultAst.m = 6.687E15; % mass (kg)
-                defaultAst.mu = G*defaultAst.m;
-                defaultAst.alb = 0.8;  % albedo
-                % Orbital Elements (JPL HORIZONS)
-                defaultAst.tEpoch = 2451170.5;   % JD epoch (days)
-                    % 1998 Dec 23 00:00:00 UTC
-                defaultAst.oeHCI = [1.458260038106518*AU;
-                                    0.2228858603247133;
-                                    deg2rad(10.83015266864554);
-                                    deg2rad(304.4308844737856);
-                                    deg2rad(178.6132327246327);
-                                    deg2rad(208.1235381788443)];
-                % Rotation Parameters (IAU Report) epoch: J2000
-                defaultAst.rotParam = [11.35;
-                                       17.22;
-                                       326.07;
-                                       1639.38864745];
+                defaultAst = ASTEROID();
             % Spacecraft
                 tEpoch = datenum(2019,9,4,0,0,0)+1721058.5;  % JD epoch (days)
                 oeACI = [35 0.01 deg2rad(80) deg2rad(220) 0 1.5]';

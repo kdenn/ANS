@@ -23,7 +23,7 @@ classdef SPACECRAFT
     -----------------------------------------------------------------------
     %}
     
-    properties (SetAccess = protected)
+    properties (SetAccess = private)
         name                % str, name of the sc 
         camera              % camera, short-range camera used by the sc
         tEpoch              % double, Julian date of epoch (days)
