@@ -272,11 +272,10 @@ classdef GROUNDTRUTH
         
         function gt = compGT(gt)
             % Compute all of the ground truth meta data (not the images)
-            % ansGT = ansGT.compGT()
-            % OR ansGT = compGT(ansGT)
             %{
             ---------------------------------------------------------------
-            INPUT: none
+            INPUT: gt = gt.compGT()
+                none
             ---------------------------------------------------------------
             OUTPUT:
                 gt:         GROUNDTRUTH object
@@ -350,7 +349,7 @@ classdef GROUNDTRUTH
             INPUT: none
             ---------------------------------------------------------------
             OUTPUT:
-                ansGT       ANSGT object
+                gt:         GROUNDTRUTH object
             ---------------------------------------------------------------
             %}
             
@@ -365,7 +364,7 @@ classdef GROUNDTRUTH
             INPUT: none
             ---------------------------------------------------------------
             OUTPUT:
-                ansGT       ANSGT object
+                gt:         GROUNDTRUTH object
             ---------------------------------------------------------------
             NOTES:
                 - compGT must be called first!
@@ -386,7 +385,7 @@ classdef GROUNDTRUTH
             INPUT: none
             ---------------------------------------------------------------
             OUTPUT:
-                ansGT       ANSGT object
+                gt:         GROUNDTRUTH object
             ---------------------------------------------------------------
             %}
         end
