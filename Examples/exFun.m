@@ -1,10 +1,18 @@
 function [out1, out2] = exFun(inStr,inVar,inArr,inMat)
-    % Short description (fit in one line)
+    % Short, one-line description. This is an example function.
     %{
     -----------------------------------------------------------------------
     DESCRIPTION:
         Longer description here in paragraph form. All text should fit
         within the standard MATLAB width unless the line includes a string.
+        This is an example description. Lorem ipsum dolor sit amet, 
+        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+        nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate 
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
     -----------------------------------------------------------------------
     USAGE: [out1, out2] = funName(inStr,inVar,inArr,inMat)
         inStr:      str, string or character type input description
@@ -28,17 +36,17 @@ function [out1, out2] = exFun(inStr,inVar,inArr,inMat)
         - Citations here, preferrably IEEE format
     -----------------------------------------------------------------------
     NOTES:
-        - Text text text text text text text text text text text text text
-          text text text text text text text text text text text text
-        - Text text text text text text text text text text text text text
-          text text text text text text text text text text text text
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
     -----------------------------------------------------------------------
-    AUTHOR: Kaitlin Dennison
+    AUTHOR: First Lastname
     -----------------------------------------------------------------------
     COPYTRIGHT: 2019 SLAB Group
     -----------------------------------------------------------------------
     TIMESTAMPS:
-        - 13-Jun-2019: creation (KD)
+        - DD-MMM-YYYY: short description of change (initials)
     -----------------------------------------------------------------------
     %}
     
@@ -61,7 +69,8 @@ function out = localFun(in)
         out:        type, description
     -----------------------------------------------------------------------
     NOTES:
-        - Text
+        - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
     -----------------------------------------------------------------------
     %}
     
