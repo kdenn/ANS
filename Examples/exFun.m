@@ -50,19 +50,19 @@ function [out1, out2] = exFun(inStr,inVar,inArr,inMat)
     -----------------------------------------------------------------------
     %}
     
-    %% Section1
+    %% Section 1
     out1 = localFun(inVar);
-    %% Section2
+    
+    %% Section 2
     out2 = inStr;
 
 end
 
 function out = localFun(in)
     % Short description
-    % out = localFun(in)
     %{
     -----------------------------------------------------------------------
-    INPUT:
+    INPUT: out = localFun(in)
         in:         type, description
     -----------------------------------------------------------------------
     OUTPUT:

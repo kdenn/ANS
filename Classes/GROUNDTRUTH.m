@@ -5,6 +5,15 @@ classdef GROUNDTRUTH
     DESCRIPTION:
         Creates an object to store all of the ground truth data and
         simulation parameters for the ANS project. 
+    
+        Nomenclature:
+        - ACI: Asteroid-centered-inertial J2000 navigation frame
+        - ast: asteroid
+        - eul: Euler angles
+        - HCI: heleo-centric-inertial ecliptic plane
+        - sat: satellite
+        - sc: spacecraft
+        - SCI: solar-centered-inertial J2000 equatorial frame
     -----------------------------------------------------------------------
     REFERENCES:
         - Text
@@ -14,7 +23,7 @@ classdef GROUNDTRUTH
           use the setProp function after constructing the ANSGT object
         - All images will be saved in the Images folder associated with
           each spacecraft: 
-            [ansGT.dirCurrent,'\',ansGT.dirData,'\',ansGT.spacecraft{n}.name,'\Images']
+          [ansGT.dirCurrent,'\',ansGT.dirData,'\',ansGT.spacecraft{n}.name,'\Images']
     -----------------------------------------------------------------------
     AUTHOR: Kaitlin Dennison and Nathan Stacey
     -----------------------------------------------------------------------
@@ -25,6 +34,7 @@ classdef GROUNDTRUTH
         - 13-Jun-2019: style changes (KD)
         - 14-Jun-2019: style updates, changed asteroid to its own class,
           added in new parameters at req of Rin and Tom (KD)
+        - 17-Jun-2019: renamed to GROUNDTRUTH
     -----------------------------------------------------------------------
     %}
     
@@ -58,11 +68,10 @@ classdef GROUNDTRUTH
     
     methods
         function gt = GROUNDTRUTH(varargin)
-            % ANSGT constructor
-            % ansGT = ANSGT(option1,value1,...)
+            % GROUNDTRUTH constructor
             %{
             ---------------------------------------------------------------
-            INPUT:
+            INPUT: ansGT = ANSGT(option1,value1,...)
                 Input parsing is supported with defaults. ansGT = ANSGT() 
                 sets all properties to default values
                 name:       str, name of test or simulation to add to any
@@ -90,8 +99,8 @@ classdef GROUNDTRUTH
                             DEFAULT: 500
             ---------------------------------------------------------------
             OUTPUT:
-                ansGT:      ANSGT object, all simulation parameters stored,
-                            no GT or images generated yet.
+                gt:         GROUNDTRUTH object, all simulation parameters
+                            stored, no GT or images generated yet.
             ---------------------------------------------------------------
             %}
 
@@ -180,7 +189,7 @@ classdef GROUNDTRUTH
             
         end
         
-        function ansGT = compGT(ansGT)
+        function gt = compGT(gt)
             % Compute all of the ground truth meta data (not the images)
             % ansGT = ansGT.compGT()
             % OR ansGT = compGT(ansGT)
@@ -189,7 +198,7 @@ classdef GROUNDTRUTH
             INPUT: none
             ---------------------------------------------------------------
             OUTPUT:
-                ansGT       ANSGT object
+                gt          GROUNDTRUTH object
             ---------------------------------------------------------------
             NOTES:
                 - All sc data will be saved in the Images folder associated
@@ -199,8 +208,8 @@ classdef GROUNDTRUTH
             %}
             
             %% Set Up File System
-            for n = 1:ansGT.nSpacecraft
-                dirSpacecraft = [ansGT.dirCurrent,'\',ansGT.dirData,'\',ansGT.spacecraft{n}.name];
+            for n = 1:gt.nSpacecraft
+                dirSpacecraft = [gt.dirCurrent,'\',gt.dirData,'\',gt.spacecraft{n}.name];
                 if ~exist(dirSpacecraft,'dir')
                     mkdir(dirSpacecraft)
                 end
@@ -208,39 +217,39 @@ classdef GROUNDTRUTH
                     mkdir([dirSpacecraft,'\Images'])
                 end
             end
-            addpath(genpath([ansGT.dirCurrent,'\',ansGT.dirData]));
+            addpath(genpath([gt.dirCurrent,'\',gt.dirData]));
             
             %% Initialize
-            stateGTsize = ansGT.nSpacecraft*6;
-            ansGT.stateGT = zeros(ansGT.nImages,stateGTsize);
-            ansGT.meta = zeros(ansGT.nImages,12,ansGT.nSpacecraft);
+            stateGTsize = gt.nSpacecraft*6;
+            gt.stateGT = zeros(gt.nImages,stateGTsize);
+            gt.meta = zeros(gt.nImages,12,gt.nSpacecraft);
             % [JD,rAstSCI,rSatACI,eul,Ldxn] [1 x 12]
             % eul = rotm2eul(rotm,'ZYX')
             
             %% Compute Data
             muSun = 1.3271244004193938E11; % Grav Param of Sun [km^3/s^2]
             Reqec = rotEQUtoECL();
-            common = zeros(ansGT.nImages,4);
+            common = zeros(gt.nImages,4);
             % Data common to all SC
-            for i = 1:ansGT.nImages
+            for i = 1:gt.nImages
                 % Asteroid
-                tAst = (ansGT.tJD(i) - ansGT.asteroid.tEpoch)*86400;
-                rAstSCI = Reqec'*propOEtoRV(ansGT.asteroid.oeHCI,muSun,tAst);
-                common(i,:) = [ansGT.tJD(i) rAstSCI'];
+                tAst = (gt.tJD(i) - gt.asteroid.tEpoch)*86400;
+                rAstSCI = Reqec'*propOEtoRV(gt.asteroid.oeHCI,muSun,tAst);
+                common(i,:) = [gt.tJD(i) rAstSCI'];
             end
-            ansGT.meta(:,1:4,:) = repmat(common,1,1,ansGT.nSpacecraft);
+            gt.meta(:,1:4,:) = repmat(common,1,1,gt.nSpacecraft);
             % Data unique to each SC
-            for n = 1:ansGT.nSpacecraft
-                for i = 1:ansGT.nImages
-                    rAstSCI = ansGT.meta(i,2:4,n);
+            for n = 1:gt.nSpacecraft
+                for i = 1:gt.nImages
+                    rAstSCI = gt.meta(i,2:4,n);
                     % Spacecraft Position
-                    tSat = (ansGT.tJD(i) - ansGT.spacecraft{n}.tEpoch)*86400;
-                    [rSatACI,vSatACI] = propOEtoRV(ansGT.spacecraft{n}.oeACI,ansGT.asteroid.mu,tSat);
+                    tSat = (gt.tJD(i) - gt.spacecraft{n}.tEpoch)*86400;
+                    [rSatACI,vSatACI] = propOEtoRV(gt.spacecraft{n}.oeACI,gt.asteroid.mu,tSat);
                     % Spacecraft Attitude
                     R = rotWldCam(rSatACI,vSatACI,[0;0;0]);
                     eul = rotMtoEul(R);
                     % Lighting Direction
-                    dat = transPt32(-rAstSCI,rSatACI,R,ansGT.spacecraft{n}.camera)';
+                    dat = transPt32(-rAstSCI,rSatACI,R,gt.spacecraft{n}.camera)';
                     Ldxn = -dat'./norm(dat);
                     a = acosd(dot(rSatACI,-rAstSCI)/(norm(rSat)*norm(-rAstSCI)));
                     if a > 90

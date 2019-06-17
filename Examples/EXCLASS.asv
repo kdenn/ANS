@@ -53,45 +53,41 @@ classdef EXCLASS
             % EXCLASS object constructor
             %{
             ---------------------------------------------------------------
-            INPUT: c = EXCLASS(prpStr,prpVar,prpArr,prpMat)
-                prpStr:     str, string or character type input description
-                prpVar:     double, description of 1x1 variable (unit)
-                prpArr:     nx1 double, description of an array. 
-                                [var1 var2 var3]'
-                                (unit unit unit)
-                prpMat:     nxm cell, description of matrix
-                                {var1 var2 var3;
-                                var4 var5 var6}
-                                (unit unit unit;
-                                unit unit unit)
+            INPUT:
+                prpStr      str, string or character type input description
+                prpVar      double, description of 1x1 variable (unit)
+                prpArr      nx1 double, description of an array. Arrays shoulbe be
+                            nx1, not 1xn whenever possible because MATLAB accesses
+                    % memory column-wise fastest
+                        % [var1 var2 var3]'
+                        % (unit unit unit)
+        %% Category2
+        prpMat      % nxm cell, description of matrix
+                        % {var1 var2 var3;
+                        %  var4 var5 var6}
+                        % (unit unit unit;
+                        %  unit unit unit)
+                name:       str, name of test or simulation to add to any 
+                            files created
+                tEpoch:     double, Julian date of epoch (days)
+                oeACI:      6x1 double, Asteroid Centered Inertial orbital 
+                            elements (navigation frame)
+                                [a e i Om w M_0]' 
+                                (km - rad rad rad rad)
+                camera:     camera, camera object associated with the 
+                            spacecraft (See CAMERA.m)
             ---------------------------------------------------------------
             OUTPUT:
-                c:          EXCLASS object
+                sc:         SPACECRAFT object
             ---------------------------------------------------------------
             %}
-            
-            c.prpStr = prpStr;
-            c.prpVar = prpVar;
-            c.prpArr = prpArr;
-            c.prpMat = prpMat;
-        end
-        
-        function out = exMeth(c,in)
-            % Example method for EXCLASS
-            %{
-            ---------------------------------------------------------------
-            INPUT: out = c.exMeth(in)
-                c:          EXCLASS object
-                in:         type, description
-            ---------------------------------------------------------------
-            OUTPUT:
-                out:        type, description
-            ---------------------------------------------------------------
-            %}
-            
-            out = c.prpStr * in;
-            
+            c.name = name;
+            c.tEpoch = tEpoch;
+            c.oeACI = oeACI;
+            c.camera = camera;
         end
     end
-        
+    
+    methods
+    
 end

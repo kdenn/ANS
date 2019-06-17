@@ -37,7 +37,7 @@ classdef GROUNDTRUTH
                             % for the 3D models
         dirData = 'Data'    % str, directory to store all data
         %% Simulation Parameters
-        asteroid            % astroid, ASTEROID object (defualt: Eros)
+        asteroid            % struct, asteroid structure
         nSpacecraft         % int, number of spacecraft
         spacecraft          % nSpacecraftx1 cell, spacecraft objects
         tEpoch              % double, Julian date of epoch (days)
